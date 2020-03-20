@@ -10,7 +10,7 @@ const $ = require('jquery');
 			$.getJSON({
 				url: './fakedata/cartResponse.json',
 				success: (res) => {
-					if (res.succes) {
+					if (res.success) {
 						$btns
 							.text('Добавлено')
 							.removeClass('btn-primary')
