@@ -1,14 +1,14 @@
+const $ = require('jquery');
+
 (function() {
 	function addToCartHanlder() {
-		$btns = $('[data-add-to-cart]');
+		let $btns = $('[data-add-to-cart]');
 
 		$btns.on('click', function(e){
 			e.preventDefault();
 			
-			$.ajax({
+			$.getJSON({
 				url: './fakedata/cartResponse.json',
-				type: 'GET',
-				dataType: 'html',
 				success: (res) => {
 					if (res.succes) {
 						$btns

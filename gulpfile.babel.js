@@ -56,8 +56,7 @@ gulp.task('build', [
   'imagemin',
   'jade',
   'sass',
-  'browserify',
-  'concatLegacyScripts'
+  'browserify'
 ]);
 
 // Server tasks with watch
@@ -76,3 +75,4 @@ gulp.task('lint', ['eslint', 'stylelint']);
 
 // Testing
 gulp.task('test', ['eslint']);
+

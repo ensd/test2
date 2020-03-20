@@ -3,6 +3,7 @@
 import path from 'path';
 import autoprefixer from 'autoprefixer';
 import gulpif from 'gulp-if';
+import concat from 'gulp-concat';
 
 export default function(gulp, plugins, args, config, taskTarget, browserSync) {
   let dirs = config.directories;
@@ -11,15 +12,15 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
 
   // Sass compilation
   gulp.task('sass', () => {
-    gulp.src(path.join(dirs.source, dirs.styles, entries.css))
+    gulp.src([path.join(dirs.source, dirs.styles, entries.css), path.join(dirs.source, dirs.modules, '**/*.{sass,scss}')])
       .pipe(plugins.plumber())
       .pipe(plugins.sourcemaps.init())
       .pipe(plugins.sass({
         outputStyle: 'expanded',
         precision: 10,
         includePaths: [
-          path.join(dirs.source, dirs.styles),
-          path.join(dirs.source, dirs.modules)
+          path.join(dirs.source, dirs.styles, entries.css),
+          path.join(dirs.source, dirs.modules, '**/*.{sass,scss}')
         ]
       }))
       .on('error', function(err) {
@@ -33,6 +34,7 @@ export default function(gulp, plugins, args, config, taskTarget, browserSync) {
         path.dirname = path.dirname.replace(dirs.source, '').replace('_', '');
       }))
       .pipe(gulpif(args.production, plugins.cssnano({rebase: false})))
+      .pipe(concat("main.css"))
       .pipe(plugins.sourcemaps.write('./'))
       .pipe(plugins.notifier.success())
       .pipe(gulp.dest(dest))
